@@ -1,1 +1,1 @@
-<h1>Welcome to movie picker</h1>
+<h1>Welcome to What to Watch</h1>

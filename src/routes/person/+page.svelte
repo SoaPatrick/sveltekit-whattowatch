@@ -5,7 +5,7 @@
   movies.sort((a, b) => b.popularity - a.popularity);
 </script>
 
-<h1>Movies</h1>
+<h1>People</h1>
 
 <div class="grid">
   {#each movies as movie}

@@ -22,7 +22,7 @@
         />
       {/if}
       <div class="rating">
-        {movie.vote_average.toFixed(1)} ({movie.vote_count})
+        {movie.vote_average.toFixed(1)} ({movie.vote_count}) - {movie.popularity}
       </div>
     </a>
   {/each}

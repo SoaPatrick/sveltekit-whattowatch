@@ -3,7 +3,7 @@
   const { movies } = data;
 </script>
 
-<h1>TV SHows</h1>
+<h1>TV Shows</h1>
 
 <div class="grid">
   {#each movies as tv}
@@ -13,7 +13,7 @@
         alt={tv.title}
       />
       <div class="rating">
-        {tv.vote_average.toFixed(1)} ({tv.vote_count})
+        {tv.vote_average.toFixed(1)} ({tv.vote_count}) - {tv.popularity}
       </div>
     </a>
   {/each}
