@@ -1,4 +1,9 @@
 <script>
+  import {
+    formatEpisodeNumber,
+    formatSeasonNumber,
+    getInitials,
+  } from "$lib/helpers";
   export let data;
 
   const product = data.product;
@@ -7,19 +12,7 @@
 
   const nextEpisode = product.next_episode_to_air;
   const seasons = product.seasons;
-
-  function formatSeasonNumber(seasonNumber) {
-    return seasonNumber.toString().padStart(2, "0");
-  }
-  function formatEpisodeNumber(episodeNumber) {
-    return episodeNumber.toString().padStart(2, "0");
-  }
-
-  function getInitials(name) {
-    const names = name.split(" ");
-    const initials = names.map((part) => part.charAt(0));
-    return initials.join("").toUpperCase();
-  }
+  console.log(seasons);
 
   function isDateBeforeToday(dateString) {
     const today = new Date();
@@ -119,7 +112,7 @@
     <ul>
       <li>{nextEpisode.air_date}</li>
       <li>
-        S{formatSeasonNumber(nextEpisode.season_number)}E{formatEpisodeNumber(
+        {formatSeasonNumber(nextEpisode.season_number)}{formatEpisodeNumber(
           nextEpisode.episode_number
         )}
       </li>

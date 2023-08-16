@@ -1,17 +1,12 @@
 <script>
   export let data;
+  import { getInitials } from "$lib/helpers";
 
   const product = data.product;
   const cast = data.cast;
 
   cast.cast.sort((a, b) => a.order - b.order);
   cast.crew.sort((a, b) => b.popularity - a.popularity);
-
-  function getInitials(name) {
-    const names = name.split(" ");
-    const initials = names.map((part) => part.charAt(0));
-    return initials.join("").toUpperCase();
-  }
 </script>
 
 <h1>{product.title}</h1>

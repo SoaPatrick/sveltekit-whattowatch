@@ -8,12 +8,12 @@
 
   let gender;
   if (product.gender == 1) {
-    gender = "Female";
+    gender = "Unknown";
   }
   if (product.gender == 2) {
     gender = "Male";
   } else {
-    gender = "Unknown";
+    gender = "Female";
   }
 
   const birthDate = new Date(product.birthday);
@@ -31,8 +31,6 @@
 
   // Differenz in Jahren berechnen
   const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365));
-
-  console.log(age); // Ausgabe: aktuelles Alter
 </script>
 
 <h1>{product.name}</h1>
@@ -40,9 +38,13 @@
   src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{product.profile_path}"
   alt={product.name}
 />
-<p>
-  <a href="https://www.imdb.com/name/{product.imdb_id}" target="_blank">IMDB</a>
-</p>
+{#if product.imdb_id}
+  <p>
+    <a href="https://www.imdb.com/name/{product.imdb_id}" target="_blank"
+      >IMDB</a
+    >
+  </p>
+{/if}
 <div><strong>Known for:</strong> {product.known_for_department}</div>
 <div><strong>Gender:</strong> {gender}</div>
 <div><strong>Birthday:</strong> {formattedBirthDate} ({age} years old)</div>
@@ -57,13 +59,13 @@
         <img
           src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{credit.poster_path}"
           loading="lazy"
-          alt={credit.original_name}
+          alt={credit.name}
         />
       {:else}
         <img
-          src="https://placehold.co/300x450?text={credit.original_name}"
+          src="https://placehold.co/300x450?text={credit.name}"
           loading="lazy"
-          alt={credit.original_name}
+          alt={credit.name}
         />
       {/if}
       <div class="rating">
@@ -83,41 +85,46 @@
             <img
               src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{credit.poster_path}"
               loading="lazy"
-              alt={credit.original_title}
+              alt={credit.title}
               class="small-poster"
             />
           {:else}
             <img
               src="https://placehold.co/300x450?text={credit.original_title}"
               loading="lazy"
-              alt={credit.original_title}
+              alt={credit.title}
               class="small-poster"
             />
           {/if}
           <div class="details">
             {#if credit.media_type === "tv"}
-              <a href="/{credit.media_type}/{credit.id}"
-                >{credit.original_name}</a
-              >
+              <a href="/{credit.media_type}/{credit.id}">{credit.name}</a>
               <div>
                 {credit.first_air_date
                   ? new Date(credit.first_air_date).getFullYear()
                   : ""}
               </div>
             {:else if credit.media_type === "movie"}
-              <a href="/{credit.media_type}/{credit.id}"
-                >{credit.original_title}</a
-              >
+              <a href="/{credit.media_type}/{credit.id}">{credit.title}</a>
               <div>
                 {credit.release_date
                   ? new Date(credit.release_date).getFullYear()
                   : ""}
               </div>
             {/if}
-            <div>as {credit.character}</div>
-            <div>
-              rating: {credit.vote_average.toFixed(1)} ({credit.vote_count})
-            </div>
+            {#if credit.character}
+              <div>
+                {#if credit.media_type === "tv"}
+                  ({credit.episode_count} Episode{#if credit.episode_count > 1}s{/if})
+                {/if}
+                as {credit.character}
+              </div>
+            {/if}
+            {#if credit.vote_average && credit.vote_count}
+              <div>
+                rating: {credit.vote_average.toFixed(1)} ({credit.vote_count})
+              </div>
+            {/if}
           </div>
         </li>
       {/each}
@@ -132,31 +139,27 @@
             <img
               src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{credit.poster_path}"
               loading="lazy"
-              alt={credit.original_title}
+              alt={credit.title}
               class="small-poster"
             />
           {:else}
             <img
-              src="https://placehold.co/300x450?text={credit.original_title}"
+              src="https://placehold.co/300x450?text={credit.title}"
               loading="lazy"
-              alt={credit.original_title}
+              alt={credit.title}
               class="small-poster"
             />
           {/if}
           <div class="details">
             {#if credit.media_type === "tv"}
-              <a href="/{credit.media_type}/{credit.id}"
-                >{credit.original_name}</a
-              >
+              <a href="/{credit.media_type}/{credit.id}">{credit.name}</a>
               <div>
                 {credit.first_air_date
                   ? new Date(credit.first_air_date).getFullYear()
                   : ""}
               </div>
             {:else if credit.media_type === "movie"}
-              <a href="/{credit.media_type}/{credit.id}"
-                >{credit.original_title}</a
-              >
+              <a href="/{credit.media_type}/{credit.id}">{credit.title}</a>
               <div>
                 {credit.release_date
                   ? new Date(credit.release_date).getFullYear()
