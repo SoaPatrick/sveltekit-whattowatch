@@ -37,6 +37,9 @@
 <img
   src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{product.profile_path}"
   alt={product.name}
+  loading="lazy"
+  height="450"
+  width="300"
 />
 {#if product.imdb_id}
   <p>
@@ -58,14 +61,18 @@
       {#if credit.poster_path != null}
         <img
           src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{credit.poster_path}"
-          loading="lazy"
           alt={credit.name}
+          loading="lazy"
+          height="450"
+          width="300"
         />
       {:else}
         <img
           src="https://placehold.co/300x450?text={credit.name}"
-          loading="lazy"
           alt={credit.name}
+          loading="lazy"
+          height="450"
+          width="300"
         />
       {/if}
       <div class="rating">
@@ -84,16 +91,20 @@
           {#if credit.poster_path != null}
             <img
               src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{credit.poster_path}"
-              loading="lazy"
               alt={credit.title}
               class="small-poster"
+              loading="lazy"
+              height="450"
+              width="300"
             />
           {:else}
             <img
               src="https://placehold.co/300x450?text={credit.original_title}"
-              loading="lazy"
               alt={credit.title}
               class="small-poster"
+              loading="lazy"
+              height="450"
+              width="300"
             />
           {/if}
           <div class="details">
@@ -138,16 +149,20 @@
           {#if credit.poster_path != null}
             <img
               src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{credit.poster_path}"
-              loading="lazy"
               alt={credit.title}
               class="small-poster"
+              loading="lazy"
+              height="450"
+              width="300"
             />
           {:else}
             <img
               src="https://placehold.co/300x450?text={credit.title}"
-              loading="lazy"
               alt={credit.title}
               class="small-poster"
+              loading="lazy"
+              height="450"
+              width="300"
             />
           {/if}
           <div class="details">

@@ -14,6 +14,9 @@
 <img
   src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{product.poster_path}"
   alt={product.title}
+  loading="lazy"
+  height="450"
+  width="300"
 />
 <div>{product.runtime} Min.</div>
 <p>
@@ -33,12 +36,18 @@
               src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {:else}
             <img
               src="https://placehold.co/132x132?text={getInitials(person.name)}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {/if}
           <div class="details">
@@ -59,12 +68,18 @@
               src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {:else}
             <img
               src="https://placehold.co/132x132?text={getInitials(person.name)}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {/if}
           <div class="details">
@@ -91,6 +106,7 @@
   .avatar {
     border-radius: 50%;
     width: 75px;
+    height: auto;
     aspect-ratio: 1;
   }
 

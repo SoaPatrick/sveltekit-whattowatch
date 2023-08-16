@@ -11,6 +11,9 @@
       <img
         src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{tv.poster_path}"
         alt={tv.title}
+        loading="lazy"
+        height="450"
+        width="300"
       />
       <div class="rating">
         {tv.vote_average.toFixed(1)} ({tv.vote_count}) - {tv.popularity}

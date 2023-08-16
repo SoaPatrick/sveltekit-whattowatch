@@ -31,14 +31,18 @@
 {#if product.poster_path != null}
   <img
     src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{product.poster_path}"
-    loading="lazy"
     alt={product.original_name}
+    loading="lazy"
+    height="450"
+    width="300"
   />
 {:else}
   <img
     src="https://placehold.co/300x450?text={product.original_name}"
-    loading="lazy"
     alt={product.original_name}
+    loading="lazy"
+    height="450"
+    width="300"
   />
 {/if}
 <div>{product.episode_run_time} Min.</div>
@@ -58,12 +62,18 @@
               src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {:else}
             <img
               src="https://placehold.co/132x132?text={getInitials(person.name)}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {/if}
           <div class="details">
@@ -84,12 +94,18 @@
               src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {:else}
             <img
               src="https://placehold.co/132x132?text={getInitials(person.name)}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {/if}
           <div class="details">
@@ -107,7 +123,10 @@
     <h4>{nextEpisode.name}</h4>
     <img
       src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2{nextEpisode.still_path}"
-      alt=""
+      alt={nextEpisode.name}
+      loading="lazy"
+      height="127"
+      width="227"
     />
     <ul>
       <li>{nextEpisode.air_date}</li>

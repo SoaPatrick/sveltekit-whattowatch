@@ -23,6 +23,9 @@
 <img
   src="https://www.themoviedb.org/t/p/w227_and_h127_bestv2{product.still_path}"
   alt={product.name}
+  loading="lazy"
+  height="127"
+  width="227"
 />
 <p>{product.overview}</p>
 
@@ -37,12 +40,18 @@
               src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {:else}
             <img
               src="https://placehold.co/132x132?text={getInitials(person.name)}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {/if}
           <div class="details">
@@ -62,12 +71,18 @@
               src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {:else}
             <img
               src="https://placehold.co/132x132?text={getInitials(person.name)}"
               alt={person.name}
               class="avatar"
+              loading="lazy"
+              height="132"
+              width="132"
             />
           {/if}
           <div class="details">

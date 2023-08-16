@@ -11,14 +11,18 @@
       {#if movie.poster_path != null}
         <img
           src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{movie.poster_path}"
-          loading="lazy"
           alt={movie.title}
+          loading="lazy"
+          height="450"
+          width="300"
         />
       {:else}
         <img
           src="https://placehold.co/300x450?text={movie.title}"
-          loading="lazy"
           alt={movie.title}
+          loading="lazy"
+          height="450"
+          width="300"
         />
       {/if}
       <div class="rating">
