@@ -9,7 +9,7 @@
 
 <div class="grid">
   {#each movies as movie}
-    <a href="/people/{movie.id}">
+    <a href="/person/{movie.id}">
       {#if movie.profile_path != null}
         <img
           src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{movie.profile_path}"

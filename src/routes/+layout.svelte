@@ -14,9 +14,9 @@
 
 <nav>
   <a href="/">Home</a>
-  <a href="/movies">Movies</a>
-  <a href="/tvshows">TV Shows</a>
-  <a href="/people">People</a>
+  <a href="/movie">Movies</a>
+  <a href="/tv">TV Shows</a>
+  <a href="/person">People</a>
   <a href="/about">About</a>
 </nav>
 

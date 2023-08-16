@@ -3,26 +3,17 @@
   const { movies } = data;
 </script>
 
-<h1>Movies</h1>
+<h1>TV SHows</h1>
 
 <div class="grid">
-  {#each movies as movie}
-    <a href="/movies/{movie.id}">
-      {#if movie.poster_path != null}
-        <img
-          src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{movie.poster_path}"
-          loading="lazy"
-          alt={movie.title}
-        />
-      {:else}
-        <img
-          src="https://placehold.co/300x450?text={movie.title}"
-          loading="lazy"
-          alt={movie.title}
-        />
-      {/if}
+  {#each movies as tv}
+    <a href="/tv/{tv.id}">
+      <img
+        src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{tv.poster_path}"
+        alt={tv.title}
+      />
       <div class="rating">
-        {movie.vote_average.toFixed(1)} ({movie.vote_count})
+        {tv.vote_average.toFixed(1)} ({tv.vote_count})
       </div>
     </a>
   {/each}

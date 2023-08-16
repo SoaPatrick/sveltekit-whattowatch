@@ -47,7 +47,7 @@
             />
           {/if}
           <div class="details">
-            <a href="/people/{person.id}">{person.name}</a><br
+            <a href="/person/{person.id}">{person.name}</a><br
             />{person.character}
           </div>
         </li>
@@ -73,7 +73,7 @@
             />
           {/if}
           <div class="details">
-            <a href="/people/{person.id}">{person.name}</a><br />{person.job}
+            <a href="/person/{person.id}">{person.name}</a><br />{person.job}
           </div>
         </li>
       {/each}

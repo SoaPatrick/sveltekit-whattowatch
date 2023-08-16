@@ -74,7 +74,7 @@
             />
           {/if}
           <div class="details">
-            <a href="/people/{person.id}">{person.name}</a><br
+            <a href="/person/{person.id}">{person.name}</a><br
             />{person.character}
           </div>
         </li>
@@ -100,7 +100,7 @@
             />
           {/if}
           <div class="details">
-            <a href="/people/{person.id}">{person.name}</a><br />{person.job}
+            <a href="/person/{person.id}">{person.name}</a><br />{person.job}
           </div>
         </li>
       {/each}
@@ -136,7 +136,7 @@
           {#each season.episodes as episode}
             <li>
               <a
-                href="/tvshows/{product.id}/{season.season_number}/{episode.episode_number}"
+                href="/tv/{product.id}/{season.season_number}/{episode.episode_number}"
               >
                 {episode.episode_number} - {episode.name}</a
               >, {episode.air_date} [{episode.runtime}
