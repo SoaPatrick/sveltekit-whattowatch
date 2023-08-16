@@ -99,13 +99,19 @@
               <a href="/{credit.media_type}/{credit.id}"
                 >{credit.original_name}</a
               >
-              <div>({credit.first_air_date})</div>
+              <div>
+                {credit.first_air_date
+                  ? new Date(credit.first_air_date).getFullYear()
+                  : ""}
+              </div>
             {:else if credit.media_type === "movie"}
               <a href="/{credit.media_type}/{credit.id}"
                 >{credit.original_title}</a
               >
               <div>
-                {credit.release_date ? new Date(credit.release_date) : ""}
+                {credit.release_date
+                  ? new Date(credit.release_date).getFullYear()
+                  : ""}
               </div>
             {/if}
             <div>as {credit.character}</div>
@@ -142,7 +148,11 @@
               <a href="/{credit.media_type}/{credit.id}"
                 >{credit.original_name}</a
               >
-              <div>({credit.first_air_date})</div>
+              <div>
+                {credit.first_air_date
+                  ? new Date(credit.first_air_date).getFullYear()
+                  : ""}
+              </div>
             {:else if credit.media_type === "movie"}
               <a href="/{credit.media_type}/{credit.id}"
                 >{credit.original_title}</a
