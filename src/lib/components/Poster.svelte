@@ -27,6 +27,8 @@
 <style>
   img {
     display: block;
+    max-width: 100%;
+    height: auto;
   }
   .poster-small {
     width: 75px;
