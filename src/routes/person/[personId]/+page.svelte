@@ -1,4 +1,6 @@
 <script>
+  import Poster from "$lib/components/Poster.svelte";
+
   export let data;
 
   const product = data.product;
@@ -34,13 +36,7 @@
 </script>
 
 <h1>{product.name}</h1>
-<img
-  src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{product.profile_path}"
-  alt={product.name}
-  loading="lazy"
-  height="450"
-  width="300"
-/>
+<Poster image={product.profile_path} title={product.name} />
 {#if product.imdb_id}
   <p>
     <a href="https://www.imdb.com/name/{product.imdb_id}" target="_blank"
@@ -58,23 +54,7 @@
 <div class="grid">
   {#each sortedCreditsByVote as credit}
     <a href="/{credit.media_type}/{credit.id}">
-      {#if credit.poster_path != null}
-        <img
-          src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{credit.poster_path}"
-          alt={credit.name}
-          loading="lazy"
-          height="450"
-          width="300"
-        />
-      {:else}
-        <img
-          src="https://placehold.co/300x450?text={credit.name}"
-          alt={credit.name}
-          loading="lazy"
-          height="450"
-          width="300"
-        />
-      {/if}
+      <Poster image={credit.poster_path} title={credit.name} />
       <div class="rating">
         {credit.vote_average.toFixed(1)} ({credit.vote_count} - {credit.popularity})
       </div>
@@ -88,25 +68,11 @@
     <div class="">
       {#each castCredits as credit}
         <li class="cast">
-          {#if credit.poster_path != null}
-            <img
-              src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{credit.poster_path}"
-              alt={credit.title}
-              class="small-poster"
-              loading="lazy"
-              height="450"
-              width="300"
-            />
-          {:else}
-            <img
-              src="https://placehold.co/300x450?text={credit.original_title}"
-              alt={credit.title}
-              class="small-poster"
-              loading="lazy"
-              height="450"
-              width="300"
-            />
-          {/if}
+          <Poster
+            image={credit.poster_path}
+            title={credit.title}
+            size="small"
+          />
           <div class="details">
             {#if credit.media_type === "tv"}
               <a href="/{credit.media_type}/{credit.id}">{credit.name}</a>
@@ -146,25 +112,11 @@
     <div class="">
       {#each crewCredits as credit}
         <li class="cast">
-          {#if credit.poster_path != null}
-            <img
-              src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{credit.poster_path}"
-              alt={credit.title}
-              class="small-poster"
-              loading="lazy"
-              height="450"
-              width="300"
-            />
-          {:else}
-            <img
-              src="https://placehold.co/300x450?text={credit.title}"
-              alt={credit.title}
-              class="small-poster"
-              loading="lazy"
-              height="450"
-              width="300"
-            />
-          {/if}
+          <Poster
+            image={credit.poster_path}
+            title={credit.title}
+            size="small"
+          />
           <div class="details">
             {#if credit.media_type === "tv"}
               <a href="/{credit.media_type}/{credit.id}">{credit.name}</a>
@@ -225,15 +177,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  img {
-    display: block;
-  }
-
-  .small-poster {
-    width: 75px;
-    height: auto;
   }
 
   .cast {

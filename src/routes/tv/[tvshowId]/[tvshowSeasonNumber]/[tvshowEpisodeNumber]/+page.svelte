@@ -1,5 +1,6 @@
 <script>
   export let data;
+  import Avatar from "$lib/components/Avatar.svelte";
   import {
     formatEpisodeNumber,
     formatSeasonNumber,
@@ -7,7 +8,6 @@
   } from "$lib/helpers";
 
   const product = data.product;
-  console.log(product);
 </script>
 
 <a href="../">Back</a>
@@ -35,25 +35,7 @@
       <h2>Guest Stars</h2>
       {#each product.guest_stars as person}
         <li class="cast">
-          {#if person.profile_path}
-            <img
-              src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
-              alt={person.name}
-              class="avatar"
-              loading="lazy"
-              height="132"
-              width="132"
-            />
-          {:else}
-            <img
-              src="https://placehold.co/132x132?text={getInitials(person.name)}"
-              alt={person.name}
-              class="avatar"
-              loading="lazy"
-              height="132"
-              width="132"
-            />
-          {/if}
+          <Avatar image={person.profile_path} title={person.name} />
           <div class="details">
             <a href="/person/{person.id}">{person.name}</a><br />as {person.character}
           </div>
@@ -66,25 +48,7 @@
       <h2>Crew</h2>
       {#each product.crew as person}
         <li class="cast">
-          {#if person.profile_path}
-            <img
-              src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
-              alt={person.name}
-              class="avatar"
-              loading="lazy"
-              height="132"
-              width="132"
-            />
-          {:else}
-            <img
-              src="https://placehold.co/132x132?text={getInitials(person.name)}"
-              alt={person.name}
-              class="avatar"
-              loading="lazy"
-              height="132"
-              width="132"
-            />
-          {/if}
+          <Avatar image={person.profile_path} title={person.name} />
           <div class="details">
             <a href="/person/{person.id}">{person.name}</a><br />{person.job}
           </div>
@@ -95,12 +59,6 @@
 </div>
 
 <style>
-  .avatar {
-    border-radius: 50%;
-    width: 75px;
-    aspect-ratio: 1;
-  }
-
   .cast {
     display: flex;
     gap: 20px;

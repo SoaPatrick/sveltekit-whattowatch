@@ -1,4 +1,5 @@
 <script>
+  import Avatar from "$lib/components/Avatar.svelte";
   import {
     formatEpisodeNumber,
     formatSeasonNumber,
@@ -12,7 +13,6 @@
 
   const nextEpisode = product.next_episode_to_air;
   const seasons = product.seasons;
-  console.log(seasons);
 
   function isDateBeforeToday(dateString) {
     const today = new Date();
@@ -57,25 +57,7 @@
     <ul class="cast-list">
       {#each cast.cast as person}
         <li class="cast">
-          {#if person.profile_path}
-            <img
-              src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
-              alt={person.name}
-              class="avatar"
-              loading="lazy"
-              height="132"
-              width="132"
-            />
-          {:else}
-            <img
-              src="https://placehold.co/132x132?text={getInitials(person.name)}"
-              alt={person.name}
-              class="avatar"
-              loading="lazy"
-              height="132"
-              width="132"
-            />
-          {/if}
+          <Avatar image={person.profile_path} title={person.name} />
           <div class="details">
             <a href="/person/{person.id}">{person.name}</a><br
             />{person.character}
@@ -89,25 +71,7 @@
     <ul class="cast-list">
       {#each cast.crew as person}
         <li class="cast">
-          {#if person.profile_path}
-            <img
-              src="https://www.themoviedb.org/t/p/w132_and_h132_face{person.profile_path}"
-              alt={person.name}
-              class="avatar"
-              loading="lazy"
-              height="132"
-              width="132"
-            />
-          {:else}
-            <img
-              src="https://placehold.co/132x132?text={getInitials(person.name)}"
-              alt={person.name}
-              class="avatar"
-              loading="lazy"
-              height="132"
-              width="132"
-            />
-          {/if}
+          <Avatar image={person.profile_path} title={person.name} />
           <div class="details">
             <a href="/person/{person.id}">{person.name}</a><br />{person.job}
           </div>
@@ -174,12 +138,6 @@
   .cast-list {
     list-style-type: none;
     padding-left: 0;
-  }
-
-  .avatar {
-    border-radius: 50%;
-    width: 75px;
-    aspect-ratio: 1;
   }
 
   .cast {

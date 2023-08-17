@@ -1,4 +1,6 @@
 <script>
+  import Poster from "$lib/components/Poster.svelte";
+
   export let data;
   const { movies } = data;
 
@@ -10,23 +12,7 @@
 <div class="grid">
   {#each movies as movie}
     <a href="/person/{movie.id}">
-      {#if movie.profile_path != null}
-        <img
-          src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{movie.profile_path}"
-          alt={movie.name}
-          loading="lazy"
-          height="450"
-          width="300"
-        />
-      {:else}
-        <img
-          src="https://placehold.co/300x450?text={credit.original_title}"
-          alt={movie.name}
-          loading="lazy"
-          height="450"
-          width="300"
-        />
-      {/if}
+      <Poster image={movie.profile_path} title={movie.name} />
       <div class="rating">
         {movie.popularity}
       </div>
