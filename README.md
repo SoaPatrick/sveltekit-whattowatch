@@ -1,6 +1,6 @@
 # WhatToWatch
 
-A Sveltekit App for finding a movie to watch
+A Sveltekit App for finding a movie to watch and some more
 
 ## Developing
 
