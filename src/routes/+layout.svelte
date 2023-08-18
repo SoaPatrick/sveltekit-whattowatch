@@ -2,7 +2,20 @@
   let searchQuery = "";
 
   function handleSearch() {
-    window.location.href = `/search?query=${encodeURIComponent(searchQuery)}`;
+    if (isValidSearchQuery(searchQuery)) {
+      window.location.href = `/search?query=${encodeURIComponent(searchQuery)}`;
+    } else {
+      alert("Invalid search query");
+    }
+  }
+
+  function isValidSearchQuery(query) {
+    if (query.length < 2) {
+      return false;
+    }
+
+    const validCharacters = /^[a-zA-Z0-9\s\-_',.!?&()]+$/;
+    return validCharacters.test(query);
   }
 
   function handleKeyPress(event) {
@@ -60,6 +73,8 @@
 
   header {
     display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
     align-items: start;
     justify-content: space-between;
   }
@@ -76,6 +91,7 @@
 
   footer {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     align-items: center;
   }

@@ -20,13 +20,15 @@
 </p>
 <p>{product.overview}</p>
 
-<div class="grid">
+<div class="two-cols">
   <div class="cast-row">
     <h2>Cast ({cast.cast.length})</h2>
     <ul class="cast-list">
       {#each cast.cast as person}
         <li class="cast">
-          <Avatar image={person.profile_path} title={person.name} />
+          <div class="poster">
+            <Avatar image={person.profile_path} title={person.name} />
+          </div>
           <div class="details">
             <a href="/person/{person.id}">{person.name}</a><br
             />{person.character}
@@ -40,7 +42,9 @@
     <ul class="cast-list">
       {#each cast.crew as person}
         <li class="cast">
-          <Avatar image={person.profile_path} title={person.name} />
+          <div class="poster">
+            <Avatar image={person.profile_path} title={person.name} />
+          </div>
           <div class="details">
             <a href="/person/{person.id}">{person.name}</a><br />{person.job}
           </div>
@@ -51,10 +55,16 @@
 </div>
 
 <style>
-  .grid {
+  .two-cols {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
+  }
+
+  @media (max-width: 768px) {
+    .two-cols {
+      display: block;
+    }
   }
 
   .cast-list {
@@ -77,5 +87,9 @@
   .details a {
     font-size: 1.25rem;
     font-weight: bold;
+  }
+
+  .poster {
+    flex-shrink: 0;
   }
 </style>

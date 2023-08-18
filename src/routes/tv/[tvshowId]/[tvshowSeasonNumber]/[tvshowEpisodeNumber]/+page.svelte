@@ -35,7 +35,9 @@
       <h2>Guest Stars</h2>
       {#each product.guest_stars as person}
         <li class="cast">
-          <Avatar image={person.profile_path} title={person.name} />
+          <div class="poster">
+            <Avatar image={person.profile_path} title={person.name} />
+          </div>
           <div class="details">
             <a href="/person/{person.id}">{person.name}</a><br />as {person.character}
           </div>
@@ -48,7 +50,9 @@
       <h2>Crew</h2>
       {#each product.crew as person}
         <li class="cast">
-          <Avatar image={person.profile_path} title={person.name} />
+          <div class="poster">
+            <Avatar image={person.profile_path} title={person.name} />
+          </div>
           <div class="details">
             <a href="/person/{person.id}">{person.name}</a><br />{person.job}
           </div>
@@ -80,5 +84,15 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
+  }
+
+  @media (max-width: 768px) {
+    .two-cols {
+      display: block;
+    }
+  }
+
+  .poster {
+    flex-shrink: 0;
   }
 </style>

@@ -56,7 +56,7 @@
     <a href="/{credit.media_type}/{credit.id}">
       <Poster image={credit.poster_path} title={credit.name} />
       <div class="rating">
-        {credit.vote_average.toFixed(1)} ({credit.vote_count} - {credit.popularity})
+        {credit.vote_average.toFixed(1)} ({credit.vote_count})
       </div>
     </a>
   {/each}
@@ -68,11 +68,13 @@
     <div class="">
       {#each castCredits as credit}
         <li class="cast">
-          <Poster
-            image={credit.poster_path}
-            title={credit.title}
-            size="small"
-          />
+          <div class="poster">
+            <Poster
+              image={credit.poster_path}
+              title={credit.title}
+              size="small"
+            />
+          </div>
           <div class="details">
             {#if credit.media_type === "tv"}
               <a href="/{credit.media_type}/{credit.id}">{credit.name}</a>
@@ -112,11 +114,13 @@
     <div class="">
       {#each crewCredits as credit}
         <li class="cast">
-          <Poster
-            image={credit.poster_path}
-            title={credit.title}
-            size="small"
-          />
+          <div class="poster">
+            <Poster
+              image={credit.poster_path}
+              title={credit.title}
+              size="small"
+            />
+          </div>
           <div class="details">
             {#if credit.media_type === "tv"}
               <a href="/{credit.media_type}/{credit.id}">{credit.name}</a>
@@ -147,14 +151,26 @@
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 30px;
+  }
+
+  @media (max-width: 500px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
   }
 
   .two-cols {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
+  }
+
+  @media (max-width: 768px) {
+    .two-cols {
+      display: block;
+    }
   }
 
   a {
@@ -194,5 +210,9 @@
   .details a {
     font-size: 1.25rem;
     font-weight: bold;
+  }
+
+  .poster {
+    flex-shrink: 0;
   }
 </style>

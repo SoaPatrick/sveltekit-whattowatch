@@ -12,7 +12,7 @@
     <a href="/tv/{tv.id}">
       <Poster image={tv.poster_path} title={tv.name} />
       <div class="rating">
-        {tv.vote_average.toFixed(1)} ({tv.vote_count}) - {tv.popularity}
+        {tv.vote_average.toFixed(1)} ({tv.vote_count})
       </div>
     </a>
   {/each}
@@ -21,8 +21,14 @@
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 30px;
+  }
+
+  @media (max-width: 500px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
   }
 
   a {

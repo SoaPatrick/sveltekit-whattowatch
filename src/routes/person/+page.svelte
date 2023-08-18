@@ -23,8 +23,14 @@
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 30px;
+  }
+
+  @media (max-width: 500px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
   }
 
   a {
