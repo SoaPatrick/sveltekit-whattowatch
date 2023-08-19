@@ -1,7 +1,9 @@
 <script>
   import Avatar from "$lib/components/Avatar.svelte";
+  import Poster from "$lib/components/Poster.svelte";
   import {
     formatEpisodeNumber,
+    formatRuntime,
     formatSeasonNumber,
     getInitials,
   } from "$lib/helpers";
@@ -26,26 +28,21 @@
   }
 </script>
 
+<svelte:head>
+  <title>{product.name}</title>
+  <meta name="description" content={product.tagline} />
+  {#if product.profile_path}
+    <meta
+      property="og:image"
+      content="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{product.poster_path}"
+    />
+  {/if}
+</svelte:head>
+
 <h1>{product.name}</h1>
 <h2>{product.tagline}</h2>
-{#if product.poster_path != null}
-  <img
-    src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{product.poster_path}"
-    alt={product.original_name}
-    loading="lazy"
-    height="450"
-    width="300"
-  />
-{:else}
-  <img
-    src="https://placehold.co/300x450?text={product.original_name}"
-    alt={product.original_name}
-    loading="lazy"
-    height="450"
-    width="300"
-  />
-{/if}
-<div>{product.episode_run_time} Min.</div>
+<Poster image={product.poster_path} title={product.name} />
+<div>{formatRuntime(product.episode_run_time)}</div>
 <p>
   <a href="https://www.imdb.com/title/{ids.imdb_id}" target="_blank">IMDB</a>
 </p>
@@ -103,7 +100,9 @@
           nextEpisode.episode_number
         )}
       </li>
-      <li>{nextEpisode.runtime} Min.</li>
+      {#if nextEpisode.runtime}
+        <li>{formatRuntime(nextEpisode.runtime)}</li>
+      {/if}
     </ul>
   {/if}
 
@@ -119,8 +118,7 @@
                 href="/tv/{product.id}/{season.season_number}/{episode.episode_number}"
               >
                 {episode.episode_number} - {episode.name}</a
-              >, {episode.air_date} [{episode.runtime}
-              Min.]
+              >, {episode.air_date} [{formatRuntime(episode.runtime)}]
               {#if !isDateBeforeToday(episode.air_date)}
                 –– UNAIRED
               {/if}

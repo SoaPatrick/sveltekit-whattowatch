@@ -1,19 +1,39 @@
 <script>
   import Avatar from "$lib/components/Avatar.svelte";
   import Poster from "$lib/components/Poster.svelte";
+  import { formatRuntime } from "$lib/helpers.ts";
   export let data;
 
   const product = data.product;
   const cast = data.cast;
 
+  console.log(product.genres);
+
   cast.cast.sort((a, b) => a.order - b.order);
   cast.crew.sort((a, b) => b.popularity - a.popularity);
 </script>
 
+<svelte:head>
+  <title>{product.title}</title>
+  <meta name="description" content={product.tagline} />
+  {#if product.profile_path}
+    <meta
+      property="og:image"
+      content="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{product.poster_path}"
+    />
+  {/if}
+</svelte:head>
+
 <h1>{product.title}</h1>
-<h2>{product.tagline}</h2>
 <Poster image={product.poster_path} title={product.title} />
-<div>{product.runtime} Min.</div>
+<div>{formatRuntime(product.runtime)}</div>
+<ul>
+  {#each product.genres as genre}
+    <li>
+      {genre.name}
+    </li>
+  {/each}
+</ul>
 <p>
   <a href="https://www.imdb.com/title/{product.imdb_id}" target="_blank">IMDB</a
   >
@@ -46,7 +66,7 @@
             <Avatar image={person.profile_path} title={person.name} />
           </div>
           <div class="details">
-            <a href="/person/{person.id}">{person.name}</a><br />{person.job}
+            <a href="/person/{person.id}">{person.name}</a><br />{person.job} - {person.department}
           </div>
         </li>
       {/each}

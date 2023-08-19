@@ -5,6 +5,11 @@
   const { movies } = data;
 </script>
 
+<svelte:head>
+  <title>Movies</title>
+  <meta name="description" content="list of movies" />
+</svelte:head>
+
 <h1>Movies</h1>
 
 <div class="grid">

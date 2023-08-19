@@ -1,5 +1,6 @@
 <script>
   import Poster from "$lib/components/Poster.svelte";
+  import { truncateString } from "$lib/helpers.ts";
 
   export let data;
 
@@ -34,6 +35,17 @@
   // Differenz in Jahren berechnen
   const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365));
 </script>
+
+<svelte:head>
+  <title>{product.name}</title>
+  <meta name="description" content={truncateString(product.biography, 150)} />
+  {#if product.profile_path}
+    <meta
+      property="og:image"
+      content="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{product.profile_path}"
+    />
+  {/if}
+</svelte:head>
 
 <h1>{product.name}</h1>
 <Poster image={product.profile_path} title={product.name} />

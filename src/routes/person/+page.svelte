@@ -7,6 +7,11 @@
   movies.sort((a, b) => b.popularity - a.popularity);
 </script>
 
+<svelte:head>
+  <title>People</title>
+  <meta name="description" content="list of people" />
+</svelte:head>
+
 <h1>People</h1>
 
 <div class="grid">

@@ -5,7 +5,12 @@
   const { movies } = data;
 </script>
 
-<h1>TV Shows</h1>
+<svelte:head>
+  <title>Shows</title>
+  <meta name="description" content="list of shows" />
+</svelte:head>
+
+<h1>Shows</h1>
 
 <div class="grid">
   {#each movies as tv}

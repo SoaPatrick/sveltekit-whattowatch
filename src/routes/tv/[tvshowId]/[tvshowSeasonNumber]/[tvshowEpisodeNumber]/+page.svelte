@@ -4,11 +4,22 @@
   import {
     formatEpisodeNumber,
     formatSeasonNumber,
-    getInitials,
+    truncateString,
   } from "$lib/helpers";
 
   const product = data.product;
 </script>
+
+<svelte:head>
+  <title>{product.name}</title>
+  <meta name="description" content={truncateString(product.overview, 150)} />
+  {#if product.still_path}
+    <meta
+      property="og:image"
+      content="https://www.themoviedb.org/t/p/w227_and_h127_bestv2{product.still_path}"
+    />
+  {/if}
+</svelte:head>
 
 <a href="../">Back</a>
 <h1>{product.name}</h1>

@@ -1,11 +1,23 @@
+:root {
+  --color__primary: #f7444e;
+  --color__cyan-62: hsl(186, 39%, 62%);
+  --color__cyan-35: hsl(186, 39%, 35%);
+  --color__blue--100: hsl(196, 100%, 10%);
+  --color__blue--200: hsl(197, 100%, 12%);
+  --color__blue--shadow: rgba(0, 7, 10, 0.3);
+  --color__egg--100: hsl(46, 41%, 92%);
+  --color__egg--200: hsl(45, 40%, 96%);
+}
+
 html,
 body {
   height: 100%;
   margin: 0;
+  background: var(--color__egg--200);
 }
 
 .wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
 }
