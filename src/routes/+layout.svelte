@@ -6,7 +6,7 @@
   <slot />
 </div>
 
-<div class="pt-8 pb-24 px-2 bg-egg-200">
+<div class="pt-8 pb-28 px-2 bg-egg-200">
   <img src="/tmdb-logo.svg" alt="TMDB" class="w-28 h-auto" />
   <div class="text-sm mt-2 opacity-70">
     This product uses the TMDB API but is not endorsed or certified by TMDB.
@@ -14,9 +14,9 @@
 </div>
 
 <footer
-  class="bg-primary fixed bottom-0 left-0 w-full text-egg-100 z-50 text-xs"
+  class="bg-primary fixed bottom-0 left-0 w-full text-egg-100 z-50 text-xs font-bold"
 >
-  <nav class="flex justify-around py-4">
+  <nav class="flex justify-around pt-3 pb-6">
     <a href="/" class="flex flex-col items-center">
       <div class="icon">
         <svg
