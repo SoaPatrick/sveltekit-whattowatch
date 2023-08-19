@@ -1,4 +1,5 @@
 <script>
+  import { page } from "$app/stores";
   import Poster from "$lib/components/Poster.svelte";
   import { truncateString } from "$lib/helpers.ts";
 
@@ -39,11 +40,24 @@
 <svelte:head>
   <title>{product.name}</title>
   <meta name="description" content={truncateString(product.biography, 150)} />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content={product.name} />
+  <meta
+    property="og:description"
+    content={truncateString(product.biography, 150)}
+  />
+  <meta property="og:url" content={$page.url.href} />
   {#if product.profile_path}
-    <meta
-      property="og:image"
-      content="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{product.profile_path}"
-    />
+    <meta property="og:image" content={product.profile_path} />
+  {/if}
+  <meta
+    name="twitter:description"
+    content={truncateString(product.biography, 150)}
+  />
+  <meta name="twitter:url" content={$page.url.href} />
+  <meta name="twitter:title" content={product.name} />
+  {#if product.profile_path}
+    <meta name="twitter:image" content={product.profile_path} />
   {/if}
 </svelte:head>
 
