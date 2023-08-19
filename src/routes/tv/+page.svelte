@@ -10,55 +10,20 @@
   <meta name="description" content="list of shows" />
 </svelte:head>
 
-<h1>Shows</h1>
+<header
+  class="fixed top-0 left-0 w-full bg-primary px-2 gap-2 py-3 text-egg-100 font-bold flex justify-between"
+>
+  <div />
+  <div class="overflow-hidden text-ellipsis whitespace-nowrap">Shows</div>
+  <div />
+</header>
 
-<div class="grid">
-  {#each movies as tv}
-    <a href="/tv/{tv.id}">
-      <Poster image={tv.poster_path} title={tv.name} />
-      <div class="rating">
-        {tv.vote_average.toFixed(1)} ({tv.vote_count})
-      </div>
-    </a>
-  {/each}
+<div class="bg-egg-200 p-2">
+  <div class="grid grid-cols-3 gap-2">
+    {#each movies as tv}
+      <a href="/tv/{tv.id}" class="hover:outline-2 hover:outline-primary">
+        <Poster image={tv.poster_path} title={tv.name} />
+      </a>
+    {/each}
+  </div>
 </div>
-
-<style>
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 30px;
-  }
-
-  @media (max-width: 500px) {
-    .grid {
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    }
-  }
-
-  a {
-    position: relative;
-  }
-
-  a:hover {
-    outline: 0.5rem solid rgba(255, 0, 0, 0.5);
-  }
-
-  .rating {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3rem;
-    background: rgba(0, 0, 0, 0.75);
-    color: white;
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  img {
-    display: block;
-  }
-</style>

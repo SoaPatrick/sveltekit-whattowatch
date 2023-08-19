@@ -12,7 +12,13 @@
   <meta name="description" content="list of people" />
 </svelte:head>
 
-<h1>People</h1>
+<header
+  class="fixed top-0 left-0 w-full bg-primary px-2 gap-2 py-3 text-egg-100 font-bold flex justify-between"
+>
+  <div />
+  <div class="overflow-hidden text-ellipsis whitespace-nowrap">People</div>
+  <div />
+</header>
 
 <div class="grid">
   {#each movies as movie}

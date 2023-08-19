@@ -7,29 +7,25 @@
 
 {#if image}
   <img
-    src="https://www.themoviedb.org/t/p/w132_and_h132_face{image}"
+    src="https://www.themoviedb.org/t/p/w138_and_h175_face{image}"
     alt={title}
     class="avatar"
     loading="lazy"
-    height="132"
-    width="132"
+    height="138"
+    width="175"
   />
 {:else}
   <img
-    src="https://placehold.co/132x132?text={getInitials(title)}"
+    src="https://placehold.co/138x175?text={getInitials(title)}"
     alt={title}
     class="avatar"
     loading="lazy"
-    height="132"
-    width="132"
+    height="138"
+    width="175"
   />
 {/if}
 
 <style>
   .avatar {
-    border-radius: 50%;
-    width: 75px;
-    height: auto;
-    aspect-ratio: 1;
   }
 </style>

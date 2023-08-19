@@ -1,115 +1,193 @@
 <script>
   import Avatar from "$lib/components/Avatar.svelte";
   import Poster from "$lib/components/Poster.svelte";
-  import { formatRuntime } from "$lib/helpers.ts";
+  import { formatRuntime } from "$lib/helpers";
   export let data;
 
   const product = data.product;
   const cast = data.cast;
 
-  console.log(product.genres);
+  const crewDirecting = cast.crew.filter(
+    (person) => person.department === "Directing" && person.job === "Director"
+  );
 
-  cast.cast.sort((a, b) => a.order - b.order);
-  cast.crew.sort((a, b) => b.popularity - a.popularity);
+  const crewWriting = cast.crew.filter(
+    (person) => person.department === "Writing"
+  );
+
+  const groupedCrew = new Map();
+  crewWriting.forEach((person) => {
+    if (!groupedCrew.has(person.id)) {
+      groupedCrew.set(person.id, [person]);
+    } else {
+      groupedCrew.get(person.id).push(person);
+    }
+  });
+
+  const crewWithCombinedJobs = [];
+  groupedCrew.forEach((persons) => {
+    const combinedJobs = persons.map((p) => p.job).join(" / ");
+    crewWithCombinedJobs.push({
+      ...persons[0],
+      combinedJobs,
+    });
+  });
 </script>
 
 <svelte:head>
   <title>{product.title}</title>
   <meta name="description" content={product.tagline} />
-  {#if product.profile_path}
-    <meta
-      property="og:image"
-      content="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{product.poster_path}"
-    />
-  {/if}
 </svelte:head>
 
-<h1>{product.title}</h1>
-<Poster image={product.poster_path} title={product.title} />
-<div>{formatRuntime(product.runtime)}</div>
-<ul>
-  {#each product.genres as genre}
-    <li>
-      {genre.name}
-    </li>
-  {/each}
-</ul>
-<p>
-  <a href="https://www.imdb.com/title/{product.imdb_id}" target="_blank">IMDB</a
-  >
-</p>
-<p>{product.overview}</p>
-
-<div class="two-cols">
-  <div class="cast-row">
-    <h2>Cast ({cast.cast.length})</h2>
-    <ul class="cast-list">
-      {#each cast.cast as person}
-        <li class="cast">
-          <div class="poster">
-            <Avatar image={person.profile_path} title={person.name} />
-          </div>
-          <div class="details">
-            <a href="/person/{person.id}">{person.name}</a><br
-            />{person.character}
-          </div>
-        </li>
-      {/each}
-    </ul>
+<header
+  class="fixed top-0 left-0 w-full bg-primary px-2 gap-2 py-3 text-egg-100 font-bold flex justify-between"
+>
+  <div />
+  <div class="overflow-hidden text-ellipsis whitespace-nowrap">
+    {product.title}
   </div>
-  <div class="crew-row">
-    <h2>Crew ({cast.crew.length})</h2>
-    <ul class="cast-list">
-      {#each cast.crew as person}
-        <li class="cast">
-          <div class="poster">
-            <Avatar image={person.profile_path} title={person.name} />
-          </div>
-          <div class="details">
-            <a href="/person/{person.id}">{person.name}</a><br />{person.job} - {person.department}
-          </div>
-        </li>
-      {/each}
-    </ul>
+  <div />
+</header>
+
+<!-- movie title -->
+<div class="bg-egg-200 p-2">
+  <h1 class="font-serif text-3xl py-1">{product.title}</h1>
+  <div class="flex gap-4">
+    <span
+      >{product.release_date
+        ? new Date(product.release_date).getFullYear()
+        : ""}</span
+    >
+    <span>{formatRuntime(product.runtime)}</span>
   </div>
 </div>
 
-<style>
-  .two-cols {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-  }
+<!-- movie info with poster -->
+<div class="bg-egg-100 p-2 flex gap-2">
+  <div class="flex-shrink-0 w-28">
+    <Poster image={product.poster_path} title={product.title} />
+    <a
+      href="https://www.imdb.com/title/{product.imdb_id}"
+      target="_blank"
+      class="mt-2 block"
+      ><svg
+        id="home_img"
+        class="ipc-logo"
+        xmlns="http://www.w3.org/2000/svg"
+        width="64"
+        height="32"
+        viewBox="0 0 64 32"
+        version="1.1"
+        ><g fill="#F5C518"
+          ><rect x="0" y="0" width="100%" height="100%" rx="4" /></g
+        ><g
+          transform="translate(8.000000, 7.000000)"
+          fill="#000000"
+          fill-rule="nonzero"
+          ><polygon points="0 18 5 18 5 0 0 0" /><path
+            d="M15.6725178,0 L14.5534833,8.40846934 L13.8582008,3.83502426 C13.65661,2.37009263 13.4632474,1.09175121 13.278113,0 L7,0 L7,18 L11.2416347,18 L11.2580911,6.11380679 L13.0436094,18 L16.0633571,18 L17.7583653,5.8517865 L17.7707076,18 L22,18 L22,0 L15.6725178,0 Z"
+          /><path
+            d="M24,18 L24,0 L31.8045586,0 C33.5693522,0 35,1.41994415 35,3.17660424 L35,14.8233958 C35,16.5777858 33.5716617,18 31.8045586,18 L24,18 Z M29.8322479,3.2395236 C29.6339219,3.13233348 29.2545158,3.08072342 28.7026524,3.08072342 L28.7026524,14.8914865 C29.4312846,14.8914865 29.8796736,14.7604764 30.0478195,14.4865461 C30.2159654,14.2165858 30.3021941,13.486105 30.3021941,12.2871637 L30.3021941,5.3078959 C30.3021941,4.49404499 30.272014,3.97397442 30.2159654,3.74371416 C30.1599168,3.5134539 30.0348852,3.34671372 29.8322479,3.2395236 Z"
+          /><path
+            d="M44.4299079,4.50685823 L44.749518,4.50685823 C46.5447098,4.50685823 48,5.91267586 48,7.64486762 L48,14.8619906 C48,16.5950653 46.5451816,18 44.749518,18 L44.4299079,18 C43.3314617,18 42.3602746,17.4736618 41.7718697,16.6682739 L41.4838962,17.7687785 L37,17.7687785 L37,0 L41.7843263,0 L41.7843263,5.78053556 C42.4024982,5.01015739 43.3551514,4.50685823 44.4299079,4.50685823 Z M43.4055679,13.2842155 L43.4055679,9.01907814 C43.4055679,8.31433946 43.3603268,7.85185468 43.2660746,7.63896485 C43.1718224,7.42607505 42.7955881,7.2893916 42.5316822,7.2893916 C42.267776,7.2893916 41.8607934,7.40047379 41.7816216,7.58767002 L41.7816216,9.01907814 L41.7816216,13.4207851 L41.7816216,14.8074788 C41.8721037,15.0130276 42.2602358,15.1274059 42.5316822,15.1274059 C42.8031285,15.1274059 43.1982131,15.0166981 43.281155,14.8074788 C43.3640968,14.5982595 43.4055679,14.0880581 43.4055679,13.2842155 Z"
+          /></g
+        ></svg
+      ></a
+    >
+  </div>
+  <div>
+    <div class="overflow-auto mb-4">
+      <div class="flex flex-wrap gap-x-2">
+        {#each product.genres as genre}
+          <div class="whitespace-nowrap">
+            <span class="text-primary">#</span>{genre.name}
+          </div>
+        {/each}
+      </div>
+    </div>
+    <p class="leading-tight">{product.overview}</p>
+  </div>
+</div>
 
-  @media (max-width: 768px) {
-    .two-cols {
-      display: block;
-    }
-  }
+<!-- top billed cast -->
+<div class="bg-egg-200 p-2">
+  <div class="flex justify-between items-center">
+    <h2 class="font-serif text-2xl">Cast</h2>
+    <a href="/movie/{product.id}/cast/" class="text-sm">See All</a>
+  </div>
+  <div class="uppercase text-xs font-bold mb-1">Top billed cast</div>
+  <div class="flex gap-2 overflow-auto">
+    {#each cast.cast as person, index}
+      {#if index < 10}
+        <a
+          href="/person/{person.id}"
+          class="flex flex-col gap-1 w-24 flex-shrink-0 text-xs"
+        >
+          <Avatar image={person.profile_path} title={person.name} />
+          <div class="text-center">
+            <div class="font-bold overflow-x-hidden text-ellipsis">
+              {person.name}
+            </div>
+            <div class="overflow-x-hidden text-ellipsis">
+              {person.character}
+            </div>
+          </div>
+        </a>
+      {/if}
+    {/each}
+  </div>
+</div>
 
-  .cast-list {
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-  .cast {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-
-  .details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .details a {
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
-
-  .poster {
-    flex-shrink: 0;
-  }
-</style>
+<!-- top crew -->
+<div class="bg-egg-100 p-2">
+  <div class="flex justify-between items-center">
+    <h2 class="font-serif text-2xl">Crew</h2>
+    <a href="/movie/{product.id}/crew/" class="text-sm">See All</a>
+  </div>
+  <div class="overflow-auto">
+    <div class="flex gap-2">
+      <div>
+        <div class="uppercase text-xs font-bold mb-1">Directing</div>
+        <div class="flex gap-2">
+          {#each crewDirecting as person}
+            <a
+              href="/person/{person.id}"
+              class="flex flex-col gap-1 w-24 flex-shrink-0 text-xs"
+            >
+              <Avatar image={person.profile_path} title={person.name} />
+              <div class="text-center">
+                <div class="font-bold overflow-x-hidden text-ellipsis">
+                  {person.name}
+                </div>
+                <div class="overflow-x-hidden text-ellipsis">
+                  {person.job}
+                </div>
+              </div>
+            </a>
+          {/each}
+        </div>
+      </div>
+      <div>
+        <div class="uppercase text-xs font-bold mb-1">Writing</div>
+        <div class="flex gap-2">
+          {#each crewWithCombinedJobs as person}
+            <a
+              href="/person/{person.id}"
+              class="flex flex-col gap-1 w-24 flex-shrink-0 text-xs"
+            >
+              <Avatar image={person.profile_path} title={person.name} />
+              <div class="text-center">
+                <div class="font-bold overflow-x-hidden text-ellipsis">
+                  {person.name}
+                </div>
+                <div class="overflow-x-hidden text-ellipsis">
+                  {person.combinedJobs}
+                </div>
+              </div>
+            </a>
+          {/each}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

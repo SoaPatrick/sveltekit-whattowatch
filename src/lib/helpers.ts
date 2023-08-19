@@ -29,3 +29,41 @@ export function truncateString(str, maxLength, customEnding = '...') {
     return str.slice(0, maxLength - customEnding.length) + customEnding;
   }
 }
+
+export function calculateAge(birthday) {
+  const birthDate = new Date(birthday);
+  const currentDate = new Date();
+  const timeDiff = currentDate - birthDate;
+  const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365));
+  return age;
+}
+
+export function formatDate(date) {
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+  return formattedDate;
+}
+
+export function getGender(genderCode) {
+    if (genderCode === 1) {
+      return "Female";
+    } else if (genderCode === 2) {
+      return "Male";
+    } else {
+      return "Unknown";
+    }
+  }
+
+export function isDateBeforeToday(dateString) {
+  const today = new Date();
+  const dateToCompare = new Date(dateString);
+
+  // Setze die Zeit auf Mitternacht, um nur das Datum zu vergleichen
+  today.setHours(0, 0, 0, 0);
+  dateToCompare.setHours(0, 0, 0, 0);
+
+  return dateToCompare < today;
+}

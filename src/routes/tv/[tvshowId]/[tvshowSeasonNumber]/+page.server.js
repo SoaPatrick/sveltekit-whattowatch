@@ -1,11 +1,12 @@
 export const load = ({ fetch, params }) => {
+  const seriesId = params.tvshowId;
+
   const tvshowId = params.tvshowId;
   const seasonNumber = params.tvshowSeasonNumber;
-  const episodeNumber = params.tvshowEpisodeNumber;
 
-  const fetchTvshowEpisode = async () => {
+  const fetchTvshow = async () => {
     const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${tvshowId}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${
+      `https://api.themoviedb.org/3/tv/${seriesId}?api_key=${
         import.meta.env.VITE_KEY
       }`
     );
@@ -13,18 +14,18 @@ export const load = ({ fetch, params }) => {
     return data;
   };
 
-  const fetchSeasonEpisodes = async () => {
+  const fetchTvshowEpisode = async () => {
     const res = await fetch(
       `https://api.themoviedb.org/3/tv/${tvshowId}/season/${seasonNumber}?api_key=${
         import.meta.env.VITE_KEY
       }`
     );
     const data = await res.json();
-    return data.episodes;
+    return data;
   };
 
   return {
-    product: fetchTvshowEpisode(),
-    episodes: fetchSeasonEpisodes(),
+    tvshow: fetchTvshow(),
+    episodes: fetchTvshowEpisode(),
   };
 };

@@ -1,6 +1,23 @@
-<header>
-  <nav>
-    <a href="/">
+<script>
+  import "../app.css";
+</script>
+
+<div class="mt-12 text-blue-200">
+  <slot />
+</div>
+
+<div class="pt-8 pb-24 px-2 bg-egg-200">
+  <img src="/tmdb-logo.svg" alt="TMDB" class="w-28 h-auto" />
+  <div class="text-sm mt-2 opacity-70">
+    This product uses the TMDB API but is not endorsed or certified by TMDB.
+  </div>
+</div>
+
+<footer
+  class="bg-primary fixed bottom-0 left-0 w-full text-egg-100 z-50 text-xs"
+>
+  <nav class="flex justify-around py-4">
+    <a href="/" class="flex flex-col items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +32,7 @@
       </div>
       <span>Home</span>
     </a>
-    <a href="/movie">
+    <a href="/movie" class="flex flex-col items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +47,7 @@
       </div>
       <span>Movies</span>
     </a>
-    <a href="/tv">
+    <a href="/tv" class="flex flex-col items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +62,7 @@
       </div>
       <span>Shows</span>
     </a>
-    <a href="/">
+    <a href="/" class="flex flex-col items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +77,7 @@
       </div>
       <span>Profile</span>
     </a>
-    <a href="/search">
+    <a href="/search" class="flex flex-col items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -76,72 +93,4 @@
       <span>Search</span>
     </a>
   </nav>
-</header>
-
-<div class="container">
-  <slot />
-</div>
-<footer>
-  <img src="/tmdb-logo.svg" alt="TMDB" />
-  <div>
-    This product uses the TMDB API but is not endorsed or certified by TMDB.
-  </div>
 </footer>
-
-<style>
-  .container {
-    width: 1200px;
-    max-width: calc(100% - 40px);
-    margin: 0 auto;
-    padding: 50px 20px;
-    flex: 1;
-  }
-
-  footer {
-    background: #ddd;
-    padding: 50px 20px;
-    margin-bottom: 70px;
-  }
-
-  header {
-    position: fixed;
-    z-index: 9999;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: var(--color__primary);
-    color: var(--color__egg--200);
-  }
-
-  header a {
-    color: inherit;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  h1 {
-    margin: 0;
-  }
-
-  nav {
-    padding: 15px 20px 20px 20px;
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-    font-size: 12px;
-  }
-
-  footer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: center;
-  }
-
-  footer img {
-    width: 200px;
-    height: auto;
-  }
-</style>

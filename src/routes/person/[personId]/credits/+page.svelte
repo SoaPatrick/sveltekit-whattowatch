@@ -1,0 +1,96 @@
+<script>
+  import Avatar from "$lib/components/Avatar.svelte";
+
+  export let data;
+
+  const product = data.product;
+  const castCredits = data.combinedCreditsCast;
+  const crewCredits = data.combinedCreditsCrew;
+</script>
+
+<header
+  class="fixed top-0 left-0 w-full bg-primary px-2 gap-2 py-3 text-egg-100 font-bold flex justify-between"
+>
+  <div />
+  <div class="overflow-hidden text-ellipsis whitespace-nowrap">
+    Full Filmography
+  </div>
+  <div />
+</header>
+
+<div class="bg-egg-100 p-2">
+  <h1>
+    {product.name}
+  </h1>
+</div>
+<div class="bg-egg-200 p-2 flex flex-col gap-2">
+  {#each castCredits as credit}
+    <a href="/{credit.media_type}/{credit.id}" class="flex gap-2 w-full">
+      <div class="w-24 flex-shrink-0">
+        <Avatar
+          image={credit.poster_path}
+          title={credit.name || credit.title}
+        />
+      </div>
+      <div class="flex flex-col justify-center">
+        <div class="font-bold overflow-x-hidden text-ellipsis">
+          {credit.name || credit.title}
+        </div>
+        {#if credit.media_type === "tv"}
+          <div>
+            {credit.first_air_date
+              ? new Date(credit.first_air_date).getFullYear()
+              : ""}
+          </div>
+        {:else if credit.media_type === "movie"}
+          <div>
+            {credit.release_date
+              ? new Date(credit.release_date).getFullYear()
+              : ""}
+          </div>
+        {/if}
+        {#if credit.character}
+          <div>
+            {#if credit.media_type === "tv"}
+              ({credit.episode_count} Episode{#if credit.episode_count > 1}s{/if})
+            {/if}
+            as {credit.character}
+          </div>
+        {/if}
+      </div>
+    </a>
+  {/each}
+</div>
+<div class="bg-egg-100 p-2 flex flex-col gap-2">
+  {#each crewCredits as credit}
+    <a href="/{credit.media_type}/{credit.id}" class="flex gap-2 w-full">
+      <div class="w-24 flex-shrink-0">
+        <Avatar
+          image={credit.poster_path}
+          title={credit.name || credit.title}
+        />
+      </div>
+      <div class="flex flex-col justify-center">
+        <div class="font-bold overflow-x-hidden text-ellipsis">
+          {credit.name || credit.title}
+        </div>
+        <div class="overflow-x-hidden text-ellipsis">
+          {credit.job}
+        </div>
+        {#if credit.media_type === "tv"}
+          <div>
+            {credit.first_air_date
+              ? new Date(credit.first_air_date).getFullYear()
+              : ""}
+          </div>
+        {:else if credit.media_type === "movie"}
+          <div>
+            {credit.release_date
+              ? new Date(credit.release_date).getFullYear()
+              : ""}
+          </div>
+        {/if}
+      </div>
+    </a>
+  {/each}
+</div>
