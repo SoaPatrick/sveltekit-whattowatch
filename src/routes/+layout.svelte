@@ -17,7 +17,7 @@
   class="bg-primary fixed bottom-0 left-0 w-full text-egg-100 z-50 text-xs font-bold"
 >
   <nav class="flex justify-around pt-3 pb-6">
-    <a href="/" class="flex flex-col items-center">
+    <a href="/" class="flex flex-col gap-1 items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@
       </div>
       <span>Home</span>
     </a>
-    <a href="/movie" class="flex flex-col items-center">
+    <a href="/movie" class="flex flex-col gap-1 items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@
       </div>
       <span>Movies</span>
     </a>
-    <a href="/tv" class="flex flex-col items-center">
+    <a href="/tv" class="flex flex-col gap-1 items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@
       </div>
       <span>Shows</span>
     </a>
-    <a href="/" class="flex flex-col items-center">
+    <a href="/" class="flex flex-col gap-1 items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@
       </div>
       <span>Profile</span>
     </a>
-    <a href="/search" class="flex flex-col items-center">
+    <a href="/search" class="flex flex-col gap-1 items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
