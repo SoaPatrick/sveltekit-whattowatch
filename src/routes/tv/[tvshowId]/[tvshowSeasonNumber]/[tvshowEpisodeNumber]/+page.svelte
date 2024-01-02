@@ -2,7 +2,7 @@
   export let data;
   import Avatar from "$lib/components/Avatar.svelte";
   import Poster from "$lib/components/Poster.svelte";
-  import Watchlist from "$lib/components/watchlist.svelte";
+  import Watchlist from "$lib/components/Watchlist.svelte";
   import Watched from "$lib/components/Watched.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import ModalButton from "$lib/components/ModalButton.svelte";
