@@ -1,26 +1,12 @@
+import { fetchFromAPI } from "$lib/api";
+
 export const load = async ({ fetch, params }) => {
-  const fetchPerson = async () => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/person/${params.personId}?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const data = await res.json();
-    return data;
-  };
+  const fetchPerson = (id) => fetchFromAPI(fetch, `person/${id}`);
+  const fetchCombinedCredits = (id) =>
+    fetchFromAPI(fetch, `person/${id}/combined_credits`);
 
-  const fetchCombinedCredits = async () => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/person/${
-        params.personId
-      }/combined_credits?api_key=${import.meta.env.VITE_KEY}`
-    );
-    const data = await res.json();
-    return data;
-  };
-
-  const personData = await fetchPerson();
-  const combinedCredits = await fetchCombinedCredits();
+  const personData = await fetchPerson(params.personId);
+  const combinedCredits = await fetchCombinedCredits(params.personId);
 
   const sortedCombinedCreditsCast = combinedCredits.cast.sort((a, b) => {
     const dateA = a.release_date || a.first_air_date;

@@ -2,16 +2,21 @@
   export let data;
   import Avatar from "$lib/components/Avatar.svelte";
   import Poster from "$lib/components/Poster.svelte";
+  import Watchlist from "$lib/components/watchlist.svelte";
+  import Watched from "$lib/components/Watched.svelte";
+  import Modal from "$lib/components/Modal.svelte";
+  import ModalButton from "$lib/components/ModalButton.svelte";
   import {
     formatEpisodeNumber,
     formatRuntime,
     formatSeasonNumber,
     truncateString,
+    initializeModalArray,
+    extractData,
   } from "$lib/helpers";
 
   const product = data.product;
-
-  console.log(product);
+  const seasonId = data.seasonId;
 
   const crewDirecting = product.crew.filter(
     (person) => person.department === "Directing" && person.job === "Director"
@@ -38,6 +43,14 @@
       combinedJobs,
     });
   });
+
+  let { userId, supabase } = extractData(data);
+  let showModal = initializeModalArray(product.length);
+
+  function openModal(index) {
+    showModal[index] = true;
+    showModal = [...showModal];
+  }
 </script>
 
 <svelte:head>
@@ -71,7 +84,26 @@
 <!-- movie info with poster -->
 <div class="bg-egg-100 p-2 flex gap-2">
   <div class="flex-shrink-0 w-28">
-    <Poster image={product.still_path} title={product.name} />
+    <div class="relative">
+      <Poster image={product.still_path} title={product.name} />
+      <div
+        class="absolute top-1 right-1 w-8 aspect-square flex items-center justify-center bg-primary text-white rounded-md opacity-50 hover:opacity-100 transition-opacity"
+      >
+        <ModalButton index="1" {openModal} />
+      </div>
+    </div>
+    <Modal bind:showModal={showModal[1]}>
+      <h2 slot="header">{product.title}</h2>
+      <Watchlist {userId} mediaId={seasonId} {supabase} contentType="tv" />
+      <Watched
+        {userId}
+        mediaId={seasonId}
+        season={product.season_number}
+        episode={product.episode_number}
+        {supabase}
+        contentType="episode"
+      />
+    </Modal>
   </div>
   <div>
     <p class="leading-tight">{product.overview}</p>

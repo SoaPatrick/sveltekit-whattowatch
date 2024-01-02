@@ -67,3 +67,29 @@ export function isDateBeforeToday(dateString) {
 
   return dateToCompare < today;
 }
+
+export function daysUntil(date) {
+  const now = new Date();
+  const futureDate = new Date(date);
+  if (futureDate > now) {
+    const diffInMs = futureDate.getTime() - now.getTime();
+    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+    return diffInDays + " Days";
+  } else {
+    return 0;
+  }
+}
+
+export function initializeModalArray(length: number): boolean[] {
+  let showModal = new Array(length).fill(false);
+  return showModal;
+}
+
+export function extractData(data) {
+  let userId;
+  if (data.session) {
+    userId = data.session.user.id;
+  }
+  let { supabase } = data;
+  return { userId, supabase };
+}

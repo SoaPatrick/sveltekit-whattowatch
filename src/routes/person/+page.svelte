@@ -2,9 +2,9 @@
   import Poster from "$lib/components/Poster.svelte";
 
   export let data;
-  const { movies } = data;
+  const { people } = data;
 
-  movies.sort((a, b) => b.popularity - a.popularity);
+  people.sort((a, b) => b.popularity - a.popularity);
 </script>
 
 <svelte:head>
@@ -21,11 +21,11 @@
 </header>
 
 <div class="grid">
-  {#each movies as movie}
-    <a href="/person/{movie.id}">
-      <Poster image={movie.profile_path} title={movie.name} />
+  {#each people as person}
+    <a href="/person/{person.id}">
+      <Poster image={person.profile_path} title={person.name} />
       <div class="rating">
-        {movie.popularity}
+        {person.popularity}
       </div>
     </a>
   {/each}

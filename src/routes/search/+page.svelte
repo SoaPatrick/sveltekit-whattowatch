@@ -9,8 +9,6 @@
   let URLSearchParams = $page.url.searchParams;
   const queryValue = URLSearchParams.get("query");
 
-  console.log(queryValue);
-
   function handleSearch() {
     if (isValidSearchQuery(searchQuery)) {
       window.location.href = `/search?query=${encodeURIComponent(searchQuery)}`;

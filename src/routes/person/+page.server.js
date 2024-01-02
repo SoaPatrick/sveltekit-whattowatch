@@ -1,15 +1,12 @@
-export const load = async () => {
+import { fetchFromAPI } from "$lib/api";
+
+export const load = async ({ fetch }) => {
   const fetchPeople = async () => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/trending/person/week?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const data = await res.json();
+    const data = await fetchFromAPI(fetch, "trending/person/week");
     return data.results;
   };
 
   return {
-    movies: fetchPeople(),
+    people: await fetchPeople(),
   };
 };
