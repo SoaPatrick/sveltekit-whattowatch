@@ -65,8 +65,4 @@
     align-items: center;
     justify-content: center;
   }
-
-  img {
-    display: block;
-  }
 </style>

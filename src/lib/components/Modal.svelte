@@ -18,7 +18,6 @@
       <slot name="header" />
       <button
         class="w-8 aspect-square hover:bg-gray-200 flex items-center justify-center rounded-md"
-        autofocus
         on:click={() => dialog.close()}
         ><svg
           xmlns="http://www.w3.org/2000/svg"

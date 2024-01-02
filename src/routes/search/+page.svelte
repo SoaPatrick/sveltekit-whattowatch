@@ -52,7 +52,6 @@
     placeholder="Suche..."
     on:keydown={handleKeyPress}
     class="border-x border-y p-2 border-[#ccc] w-full"
-    autofocus
   />
 </div>
 

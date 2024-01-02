@@ -17,10 +17,6 @@
   } from "$lib/helpers";
   const { nextEpisodesAired, nextEpisodesUnaired } = data.props;
 
-  nextEpisodesAired.forEach((serie) => {
-    console.log(serie);
-  });
-
   let { userId, supabase } = extractData(data);
   let showModalAired = initializeModalArray(nextEpisodesAired.length);
   let showModalUnaired = initializeModalArray(nextEpisodesUnaired.length);
