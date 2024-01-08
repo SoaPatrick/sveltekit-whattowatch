@@ -92,6 +92,17 @@ export const load = async ({ fetch, locals: { supabase, getSession } }) => {
     }
   });
 
+  nextEpisodesAired.sort((a, b) => {
+    if (a.air_date === null) return 1; // Wenn a.air_date null ist, setzen Sie es ans Ende
+    if (b.air_date === null) return -1; // Wenn b.air_date null ist, setzen Sie es an den Anfang
+    return new Date(a.air_date) - new Date(b.air_date); // Andernfalls sortieren Sie nach air_date
+  });
+
+  nextEpisodesUnaired.sort((a, b) => {
+    if (a.air_date === null) return 1; // Wenn a.air_date null ist, setzen Sie es ans Ende
+    if (b.air_date === null) return -1; // Wenn b.air_date null ist, setzen Sie es an den Anfang
+    return new Date(a.air_date) - new Date(b.air_date); // Andernfalls sortieren Sie nach air_date
+  });
 
   return {
     props: {
