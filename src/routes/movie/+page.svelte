@@ -1,6 +1,5 @@
 <script>
   import Poster from "$lib/components/Poster.svelte";
-  import Watchlist from "$lib/components/Watchlist.svelte";
   import Watched from "$lib/components/Watched.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import ModalButton from "$lib/components/ModalButton.svelte";
@@ -48,7 +47,6 @@
       </div>
       <Modal bind:showModal={showModal[index]}>
         <h2 slot="header">{movie.title}</h2>
-        <Watchlist {userId} mediaId={movie.id} {supabase} contentType="movie" />
         <Watched {userId} mediaId={movie.id} {supabase} contentType="movie" />
       </Modal>
     {/each}
