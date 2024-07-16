@@ -1,30 +1,20 @@
+import { fetchFromAPI } from "$lib/api";
+
 export const load = ({ fetch, params }) => {
-  const tvshowId = params.tvshowId;
   const seasonNumber = params.tvshowSeasonNumber;
   const episodeNumber = params.tvshowEpisodeNumber;
 
-  const fetchTvshowEpisode = async () => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${tvshowId}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${
-        import.meta.env.VITE_KEY
-      }`
+  const fetchTvshowEpisode = (id) =>
+    fetchFromAPI(
+      fetch,
+      `tv/${id}/season/${seasonNumber}/episode/${episodeNumber}`
     );
-    const data = await res.json();
-    return data;
-  };
-
-  const fetchSeasonEpisodes = async () => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${tvshowId}/season/${seasonNumber}?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const data = await res.json();
-    return data.episodes;
-  };
+  const fetchSeasonEpisodes = (id) =>
+    fetchFromAPI(fetch, `/tv/${id}/season/${seasonNumber}`);
 
   return {
-    product: fetchTvshowEpisode(),
-    episodes: fetchSeasonEpisodes(),
+    product: fetchTvshowEpisode(params.tvshowId),
+    episodes: fetchSeasonEpisodes(params.tvshowId),
+    seasonId: params.tvshowId,
   };
 };

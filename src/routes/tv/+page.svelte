@@ -1,8 +1,19 @@
 <script>
   import Poster from "$lib/components/Poster.svelte";
+  import Modal from "$lib/components/Modal.svelte";
+  import ModalButton from "$lib/components/ModalButton.svelte";
+  import Watchlist from "$lib/components/Watchlist.svelte";
+  import { initializeModalArray, extractData } from "$lib/helpers";
 
   export let data;
-  const { movies } = data;
+  const { shows } = data;
+  let { userId, supabase } = extractData(data);
+
+  let showModal = initializeModalArray(shows.length);
+  function openModal(index) {
+    showModal[index] = true;
+    showModal = [...showModal];
+  }
 </script>
 
 <svelte:head>
@@ -20,10 +31,21 @@
 
 <div class="bg-egg-200 p-2">
   <div class="grid grid-cols-3 gap-2">
-    {#each movies as tv}
-      <a href="/tv/{tv.id}" class="hover:outline-2 hover:outline-primary">
-        <Poster image={tv.poster_path} title={tv.name} />
-      </a>
+    {#each shows as show, index}
+      <div class="relative">
+        <a href="/tv/{show.id}" class="hover:outline-2 hover:outline-primary">
+          <Poster image={show.poster_path} title={show.name} />
+        </a>
+        <div
+          class="absolute top-1 right-1 w-8 aspect-square flex items-center justify-center bg-primary text-white rounded-md opacity-50 hover:opacity-100 transition-opacity"
+        >
+          <ModalButton {index} {openModal} />
+        </div>
+      </div>
+      <Modal bind:showModal={showModal[index]}>
+        <h2 slot="header">{show.name}</h2>
+        <Watchlist {userId} mediaId={show.id} {supabase} contentType="tv" />
+      </Modal>
     {/each}
   </div>
 </div>

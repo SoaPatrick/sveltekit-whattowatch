@@ -1,26 +1,12 @@
+import { fetchFromAPI } from "$lib/api";
+
 export const load = async ({ fetch, params }) => {
-  const fetchPerson = async () => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/person/${params.personId}?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const data = await res.json();
-    return data;
-  };
+  const fetchPerson = (id) => fetchFromAPI(fetch, `person/${id}`);
+  const fetchCombinedCredits = (id) =>
+    fetchFromAPI(fetch, `person/${id}/combined_credits`);
 
-  const fetchCombinedCredits = async () => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/person/${
-        params.personId
-      }/combined_credits?api_key=${import.meta.env.VITE_KEY}`
-    );
-    const data = await res.json();
-    return data;
-  };
-
-  const personData = await fetchPerson();
-  const combinedCredits = await fetchCombinedCredits();
+  const personData = await fetchPerson(params.personId);
+  const combinedCredits = await fetchCombinedCredits(params.personId);
 
   let sortArray;
   if (personData.known_for_department === "Acting") {
@@ -41,7 +27,7 @@ export const load = async ({ fetch, params }) => {
           item.character !== null) ||
           (item.media_type === "movie" &&
             item.character !== null &&
-            item.order < 5))
+            item.order < 10))
     );
   } else {
     filteredCredits = sortArray;

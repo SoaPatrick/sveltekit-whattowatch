@@ -1,26 +1,88 @@
-export const load = ({ fetch, params }) => {
-  const fetchMovie = async (id) => {
-    const movieRes = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const movbieData = await movieRes.json();
-    return movbieData;
-  };
+import { fetchFromAPI } from "$lib/api";
+import { fail } from "@sveltejs/kit";
 
-  const fetchCast = async (id) => {
-    const castRes = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const castData = await castRes.json();
-    return castData;
-  };
+export const load = async ({
+  fetch,
+  params,
+  locals: { supabase, getSession },
+}) => {
+  const session = await getSession();
 
+  const fetchMovie = (id) => fetchFromAPI(fetch, `movie/${id}`);
+  const fetchCast = (id) => fetchFromAPI(fetch, `movie/${id}/credits`);
+  const fetchReleaseDates = (id) =>
+    fetchFromAPI(fetch, `movie/${id}/release_dates`);
+  const fetchProviders = (id) =>
+    fetchFromAPI(fetch, `movie/${id}/watch/providers`);
+
+  let inWatchlist = false;
+  if (session) {
+    const { data: watchlist, error } = await supabase
+      .from("watchlist")
+      .select("movie_id")
+      .eq("profile_id", session.user.id)
+      .eq("movie_id", params.movieId);
+    if (watchlist && watchlist.length > 0) {
+      inWatchlist = true;
+    }
+  }
   return {
     product: fetchMovie(params.movieId),
     cast: fetchCast(params.movieId),
+    providers: fetchProviders(params.movieId),
+    releaseDates: fetchReleaseDates(params.movieId),
+    inWatchlist: inWatchlist,
   };
+};
+
+export const actions = {
+  // ... Ihre vorhandenen Aktionen ...
+
+  add: async ({ request, locals: { supabase, getSession } }) => {
+    const formData = await request.formData();
+    const movieId = formData.get("movie_id");
+
+    const session = await getSession();
+
+    const { error } = await supabase.from("watchlist").insert({
+      profile_id: session?.user.id,
+      movie_id: movieId,
+      added_date: new Date(),
+      content_type_id: 1,
+      // Setzen Sie hier weitere benötigte Felder
+    });
+
+    if (error) {
+      return fail(500, {
+        movieId,
+      });
+    }
+
+    return {
+      movieId,
+    };
+  },
+
+  remove: async ({ request, locals: { supabase, getSession } }) => {
+    const formData = await request.formData();
+    const movieId = formData.get("movie_id");
+
+    const session = await getSession();
+
+    const { error } = await supabase
+      .from("watchlist")
+      .delete()
+      .eq("movie_id", movieId)
+      .eq("profile_id", session?.user.id);
+
+    if (error) {
+      return fail(500, {
+        movieId,
+      });
+    }
+
+    return {
+      movieId,
+    };
+  },
 };

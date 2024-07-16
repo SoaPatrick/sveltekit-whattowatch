@@ -1,56 +1,26 @@
+import { fetchFromAPI } from "$lib/api";
+
 export const load = async ({ fetch, params }) => {
   const seriesId = params.tvshowId;
 
-  const fetchTvshow = async () => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${seriesId}?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const data = await res.json();
-    return data;
-  };
+  const fetchTvshow = (id) => fetchFromAPI(fetch, `tv/${id}`);
+  const fetchTvshowExternalIds = (id) =>
+    fetchFromAPI(fetch, `tv/${id}/external_ids`);
+  const fetchTvshowCredits = (id) =>
+    fetchFromAPI(fetch, `tv/${id}/aggregate_credits`);
+  const fetchSeasonEpisodes = (seasonNumber) =>
+    fetchFromAPI(fetch, `tv/${seriesId}/season/${seasonNumber}`);
+  const fetchProviders = (id) =>
+    fetchFromAPI(fetch, `tv/${id}/watch/providers`);
 
-  const fetchTvshowExternalIds = async (id) => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${seriesId}/external_ids?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const data = await res.json();
-    return data;
-  };
-
-  const fetchTvshowCredits = async (id) => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${seriesId}/credits?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const data = await res.json();
-    return data;
-  };
-
-  const fetchSeasonEpisodes = async (seriesId, seasonNumber) => {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}?api_key=${
-        import.meta.env.VITE_KEY
-      }`
-    );
-    const data = await res.json();
-    return data.episodes;
-  };
-
-  const tvshow = await fetchTvshow();
-  const externalIds = await fetchTvshowExternalIds();
-  const tvshowCredits = await fetchTvshowCredits();
+  const tvshow = await fetchTvshow(params.tvshowId);
+  const externalIds = await fetchTvshowExternalIds(params.tvshowId);
+  const tvshowCredits = await fetchTvshowCredits(params.tvshowId);
+  const providers = await fetchProviders(params.tvshowId);
 
   const seasonsWithEpisodes = await Promise.all(
     tvshow.seasons.map(async (season) => {
-      const episodes = await fetchSeasonEpisodes(
-        seriesId,
-        season.season_number
-      );
+      const episodes = await fetchSeasonEpisodes(season.season_number);
       return {
         ...season,
         episodes,
@@ -65,5 +35,6 @@ export const load = async ({ fetch, params }) => {
     },
     credits: tvshowCredits,
     ids: externalIds,
+    providers: providers,
   };
 };

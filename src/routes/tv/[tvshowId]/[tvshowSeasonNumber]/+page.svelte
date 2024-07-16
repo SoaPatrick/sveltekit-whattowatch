@@ -3,14 +3,29 @@
     formatRuntime,
     isDateBeforeToday,
     truncateString,
+    initializeModalArray,
+    extractData,
   } from "$lib/helpers";
   import { page } from "$app/stores";
   import Avatar from "$lib/components/Avatar.svelte";
+  import Watchlist from "$lib/components/Watchlist.svelte";
+  import Watched from "$lib/components/Watched.svelte";
+  import Modal from "$lib/components/Modal.svelte";
+  import ModalButton from "$lib/components/ModalButton.svelte";
 
   export let data;
+  let episodes = data.episodes;
   $: product = data.tvshow;
   $: episodes = data.episodes;
   $: tvshowSeasonNumber = $page.params.tvshowSeasonNumber;
+
+  let { userId, supabase } = extractData(data);
+  let showModal = initializeModalArray(episodes.length);
+
+  function openModal(index) {
+    showModal[index] = true;
+    showModal = [...showModal];
+  }
 </script>
 
 <header
@@ -55,29 +70,44 @@
 </div>
 
 <div class="bg-egg-100 p-2 flex flex-col gap-2">
-  {#each episodes.episodes as episode}
-    <a
-      href="/tv/{product.id}/{episodes.season_number}/{episode.episode_number}"
-      class="flex gap-2 w-full"
-    >
-      <div class="w-24 flex-shrink-0">
-        <Avatar image={episode.still_path} title={episode.name} />
-      </div>
-      <div class="flex flex-col justify-center">
-        <div class="font-bold overflow-x-hidden text-ellipsis">
-          {episode.episode_number}. {episode.name}
+  {#each episodes.episodes as episode, index}
+    <div class="flex gap-2 items-start">
+      <a
+        href="/tv/{product.id}/{episodes.season_number}/{episode.episode_number}"
+        class="flex gap-2 w-full"
+      >
+        <div class="w-24 flex-shrink-0">
+          <Avatar image={episode.still_path} title={episode.name} />
         </div>
-        <div class="overflow-x-hidden text-ellipsis">
-          {episode.air_date}
-          {#if episode.runtime}[{formatRuntime(episode.runtime)}]{/if}<br />
-          {#if !isDateBeforeToday(episode.air_date)}
-            –– UNAIRED
-          {/if}
+        <div class="flex flex-col justify-center">
+          <div class="font-bold overflow-x-hidden text-ellipsis">
+            {episode.episode_number}. {episode.name}
+          </div>
+          <div class="overflow-x-hidden text-ellipsis">
+            {episode.air_date}
+            {#if episode.runtime}[{formatRuntime(episode.runtime)}]{/if}<br />
+            {#if !isDateBeforeToday(episode.air_date)}
+              –– UNAIRED
+            {/if}
+          </div>
+          <div class="overflow-y-hidden text-ellipsis text-sm mt-1">
+            {truncateString(episode.overview, 100)}
+          </div>
         </div>
-        <div class="overflow-y-hidden text-ellipsis text-sm mt-1">
-          {truncateString(episode.overview, 100)}
-        </div>
-      </div>
-    </a>
+      </a>
+      <ModalButton {index} {openModal} />
+    </div>
+    <Modal bind:showModal={showModal[index]}>
+      <h2 slot="header">{episode.name}</h2>
+      <Watchlist {userId} mediaId={product.id} {supabase} contentType="tv" />
+      <Watched
+        {userId}
+        mediaId={product.id}
+        season={episodes.season_number}
+        episode={episode.episode_number}
+        {supabase}
+        contentType="episode"
+      />
+    </Modal>
   {/each}
 </div>

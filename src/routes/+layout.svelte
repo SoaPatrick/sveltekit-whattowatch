@@ -1,4 +1,21 @@
-<script>
+<script lang="ts">
+  import { invalidate } from "$app/navigation";
+  import { onMount } from "svelte";
+
+  export let data;
+
+  let { supabase, session, username } = data;
+  $: ({ supabase, session, username } = data);
+
+  onMount(() => {
+    const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+      if (_session?.expires_at !== session?.expires_at) {
+        invalidate("supabase:auth");
+      }
+    });
+
+    return () => data.subscription.unsubscribe();
+  });
   import "../app.css";
 </script>
 
@@ -62,7 +79,7 @@
       </div>
       <span>Shows</span>
     </a>
-    <a href="/" class="flex flex-col gap-1 items-center">
+    <a href="/profile" class="flex flex-col gap-1 items-center">
       <div class="icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +92,7 @@
           /></svg
         >
       </div>
-      <span>Profile</span>
+      <span>{session ? username || "Profil" : "Log In"}</span>
     </a>
     <a href="/search" class="flex flex-col gap-1 items-center">
       <div class="icon">
